@@ -1,0 +1,23 @@
+{
+  "name": "ts-study",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc-watch --onSuccess \" node dist/index.js \" "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ballsona/TS-study.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ballsona/TS-study/issues"
+  },
+  "homepage": "https://github.com/ballsona/TS-study#readme",
+  "dependencies": {
+    "crypto-js": "^4.1.1",
+    "tsc-watch": "^4.6.0"
+  }
+}
