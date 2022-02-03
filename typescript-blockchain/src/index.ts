@@ -1,8 +1,10 @@
-import * as CryptoJs from "crypto-js";
 //crypto-js : javascript에서 해시 함수를 통해 암호화를 할 수 있도록 해주는 패키지
+import * as CryptoJs from "crypto-js";
 
 class Block {
-  // static 
+  // static 함수들은 Block의 인자가 아닌 class 자체의 함수여야만 함.
+  
+  //Crypto-JS 를 통해 해시 생성해주는 함수
   static calculateBlockHash = (
     index: number,
     prevHash: string,
@@ -10,6 +12,7 @@ class Block {
     data: string
   ): string => CryptoJs.SHA256(index + prevHash + timestamp + data).toString();
 
+  //블록체인의 블록 구조가 올바르게 생성되었는지 체크하는 함수
   static validateStructure = (aBlock: Block): boolean =>
     typeof aBlock.index === 'number' &&
     typeof aBlock.hash === 'string' &&
@@ -38,16 +41,17 @@ class Block {
   }
 }
 
+//블록체인 초기화
 const genesisBlock: Block = new Block(0, "2020202202", "", "first", 123456);
-
 let blockChain: Block[] = [genesisBlock];
 
-const getBlockChain = (): Block[] => blockChain;
-
+//블록체인의 가장 마지막 블록 가져오기
 const getLatestBlock = (): Block => blockChain[blockChain.length - 1];
 
+//새로운 timestamp 생성
 const getNewTimeStamp = (): number => Math.round(new Date().getTime() / 1000);
 
+//데이터 인자를 받아서 새로운 블록 생성
 const createNewBlock = (data: string): Block => {
   const prevBlock: Block = getLatestBlock();
   const newIndex: number = prevBlock.index + 1;
@@ -69,6 +73,7 @@ const createNewBlock = (data: string): Block => {
   return newBlock;
 };
 
+//블록의 hash를 가져오는 함수 
 const getHashforBlock = (aBlock: Block) : string => Block.calculateBlockHash(
   aBlock.index,
   aBlock.prevHash,
@@ -76,6 +81,7 @@ const getHashforBlock = (aBlock: Block) : string => Block.calculateBlockHash(
   aBlock.data
 );
 
+//블록의 유효성 검증하는 함수. 이전 블록과 잘 연결되어있는지도 확인.
 const isBlockValid = (candidateBlock: Block, prevBlock: Block): Boolean => {
   if(!Block.validateStructure(candidateBlock)){
     return false;
@@ -90,6 +96,7 @@ const isBlockValid = (candidateBlock: Block, prevBlock: Block): Boolean => {
   }
 };
 
+//블록 유효성이 검증되었을 때, 블록을 블록체인에 넣어주는 함수.
 const addBlock = (candidateBlock:Block) : void =>{
   if(isBlockValid(candidateBlock,getLatestBlock())) {
     blockChain.push(candidateBlock);
