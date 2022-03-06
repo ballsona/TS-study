@@ -8,37 +8,36 @@ const UserBlock = styled.div`
   border-radius: 10px;
 `;
 
-interface UserListProps {
-  users: { id: number; username: string; email: string; age: number }[];
-}
+const UserNameBlock = styled.span<{ active: boolean }>`
+  color: ${(props) => (props.active ? "green" : "black")};
+`;
 
-interface UserProps {
-  user: {
+interface UserListProps {
+  users: {
     id: number;
     username: string;
     email: string;
     age: number;
-  };
+    active: boolean;
+  }[];
+  onRemove: (id: number) => void;
+  onToggle: (id: number) => void;
 }
 
-const User: React.FC<UserProps> = ({ user }) => {
-  return (
-    <UserBlock>
-      <p>이름 : {user.username}</p>
-      <p>이메일 : {user.email}</p>
-      <p>나이 : {user.age}</p>
-    </UserBlock>
-  );
-};
-
-const UserList: React.FC<UserListProps> = ({ users }) => {
+function UserList({ users, onRemove, onToggle }: UserListProps) {
   return (
     <>
       {users.map((user) => (
-        <User user={user} />
+        <UserBlock key={user.id}>
+          <div onClick={() => onToggle(user.id)}>
+            <UserNameBlock active={user.active}>{user.username}</UserNameBlock>(
+            {user.email}) : {user.age}
+          </div>
+          <button onClick={() => onRemove(user.id)}>삭제</button>
+        </UserBlock>
       ))}
     </>
   );
-};
+}
 
-export default UserList;
+export default React.memo(UserList);
