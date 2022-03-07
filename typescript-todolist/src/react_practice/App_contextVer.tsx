@@ -1,4 +1,4 @@
-import React, { useMemo, useReducer, useRef } from "react";
+import React, { useMemo, useReducer, useRef, useState } from "react";
 import CreateUser from "./CreateUser";
 import UserList from "./UserList";
 import produce from "immer";
@@ -88,12 +88,19 @@ export default function App() {
   const { users } = state;
 
   const count = useMemo(() => countActiveUsers(users), [users]);
-
+  const [number, setNumber] = useState(0);
+  const plusNumber = () => {
+    setNumber((number) => number + 1);
+    setNumber((number) => number + 1);
+    console.log("plus");
+  };
   return (
     <userDispatch.Provider value={dispatch}>
       <CreateUser />
       <UserList users={users} />
       <div>활성사용자 수 : {count}</div>
+      <div>{number}</div>
+      <button onClick={plusNumber}>+1</button>
     </userDispatch.Provider>
   );
 }
