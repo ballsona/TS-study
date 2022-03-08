@@ -1,7 +1,7 @@
-import React, { useMemo, useReducer, useRef, useState } from "react";
-import CreateUser from "./CreateUser";
-import UserList from "./UserList";
-import produce from "immer";
+import React, { useMemo, useReducer, useState } from 'react';
+import CreateUser from './CreateUser';
+import UserList from './UserList';
+import produce from 'immer';
 
 interface UserType {
   id: number;
@@ -13,29 +13,29 @@ interface UserType {
 
 const initialState = {
   inputs: {
-    username: "",
-    email: "",
+    username: '',
+    email: '',
     age: 0,
   },
   users: [
     {
       id: 1,
-      username: "velopert",
-      email: "public.velopert@gmail.com",
+      username: 'velopert',
+      email: 'public.velopert@gmail.com',
       age: 20,
       active: true,
     },
     {
       id: 2,
-      username: "tester",
-      email: "tester@example.com",
+      username: 'tester',
+      email: 'tester@example.com',
       age: 21,
       active: false,
     },
     {
       id: 3,
-      username: "liz",
-      email: "liz@example.com",
+      username: 'liz',
+      email: 'liz@example.com',
       age: 22,
       active: true,
     },
@@ -43,7 +43,7 @@ const initialState = {
 };
 
 function countActiveUsers(users: Array<UserType>): number {
-  console.log("활성화된 사용자 카운트..");
+  console.log('활성화된 사용자 카운트..');
   return users.filter((user) => user.active).length;
 }
 
@@ -56,11 +56,11 @@ function reducer(
   action: any
 ) {
   switch (action.type) {
-    case "CREATE_USER":
+    case 'CREATE_USER':
       return produce(state, (draft) => {
         draft.users.push(action.user);
       });
-    case "REMOVE_USER":
+    case 'REMOVE_USER':
       return produce(state, (draft) => {
         //TODO : Immer + typescript .. how??
         const removeIndex: any = draft.users.find(
@@ -68,7 +68,7 @@ function reducer(
         );
         draft.users.splice(removeIndex, 1);
       });
-    case "TOGGLE_USER":
+    case 'TOGGLE_USER':
       return produce(state, (draft) => {
         //TODO : Immer + typescript .. how??
         const targetUser: any = draft.users.find(
@@ -92,7 +92,7 @@ export default function App() {
   const plusNumber = () => {
     setNumber((number) => number + 1);
     setNumber((number) => number + 1);
-    console.log("plus");
+    console.log('plus');
   };
   return (
     <userDispatch.Provider value={dispatch}>
