@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 const API = 'https://jsonplaceholder.typicode.com/users';
 
-export default function User() {
+export default function Users() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
