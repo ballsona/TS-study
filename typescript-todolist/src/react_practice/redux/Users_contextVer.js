@@ -15,7 +15,8 @@ export default function Users() {
   // 삼항연산자(?) 안쓰고 이런 방법도 있구나.
   if (loading) return <h1>로딩중</h1>;
   if (error) return <h1>에러남</h1>;
-  if (!users) return null;
+  if (!users) return <button onClick={loadUsersData}>불러오기</button>;
+
   return (
     <>
       <div>

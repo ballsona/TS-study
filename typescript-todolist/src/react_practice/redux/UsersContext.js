@@ -1,7 +1,7 @@
 import React, { createContext, useReducer, useContext } from 'react';
 
 //Context 초기값
-const initalState = {
+const initialState = {
   users: {
     loading: false,
     data: null,
@@ -50,6 +50,7 @@ function usersReducer(state, action) {
     case 'GET_USER_ERROR':
       return { ...state, user: success(action.err) };
     default:
+      throw new Error(`Unhanded action type: ${action.type}`);
   }
 }
 
@@ -57,7 +58,8 @@ const UsersStateContext = createContext(null);
 const UsersDispatchContext = createContext(null);
 
 export function UserProvider({ children }) {
-  const [state, dispatch] = useReducer(usersReducer, initalState);
+  const [state, dispatch] = useReducer(usersReducer, initialState);
+
   return (
     <UsersStateContext.Provider value={state}>
       <UsersDispatchContext.Provider value={dispatch}>
